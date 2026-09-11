@@ -1,0 +1,1669 @@
+```html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin — Kurkodik</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#0d0d0d;
+  color:#fff;
+  padding:15px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.container{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-box{
+  max-width:430px;
+  margin:70px auto;
+  background:#181818;
+  border:1px solid #333;
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+
+.logo{
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.login-subtitle{
+  text-align:center;
+  color:#999;
+  margin-bottom:28px;
+}
+
+label{
+  display:block;
+  color:#bbb;
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  background:#101010;
+  color:#fff;
+  border:1px solid #383838;
+  border-radius:12px;
+  padding:13px;
+  font-size:15px;
+  margin-bottom:15px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#d8a35d;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 16px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary{
+  background:#d8a35d;
+  color:#111;
+}
+
+.primary:hover{
+  background:#e7b976;
+}
+
+.dark{
+  background:#292929;
+  color:#fff;
+}
+
+.danger{
+  background:#752b2b;
+  color:#fff;
+}
+
+.login-button{
+  width:100%;
+}
+
+.error{
+  color:#ff7777;
+  text-align:center;
+  margin-top:12px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+header h1{
+  font-size:23px;
+}
+
+/* =========================
+   MENU / BAR
+========================= */
+
+.type-switch{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.type-button{
+  background:#181818;
+  color:#999;
+  border:1px solid #333;
+  padding:16px;
+  font-size:18px;
+}
+
+.type-button.active{
+  background:#d8a35d;
+  color:#111;
+  border-color:#d8a35d;
+}
+
+/* =========================
+   CATEGORIES
+========================= */
+
+.category-box{
+  background:#181818;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:20px;
+}
+
+.category-title{
+  color:#999;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:3px;
+}
+
+.category{
+  white-space:nowrap;
+  background:#242424;
+  color:#aaa;
+  border:1px solid #3b3b3b;
+  padding:10px 14px;
+  border-radius:20px;
+}
+
+.category.active{
+  background:#d8a35d;
+  color:#111;
+  border-color:#d8a35d;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-box{
+  background:#181818;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.form-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+.price-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.preview{
+  width:100%;
+  max-height:250px;
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:15px;
+  display:none;
+}
+
+.form-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.form-buttons button{
+  flex:1;
+}
+
+/* =========================
+   LIST
+========================= */
+
+.list-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.dishes-list{
+  display:grid;
+  gap:12px;
+}
+
+.dish-card{
+  background:#181818;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  gap:15px;
+}
+
+.dish-photo{
+  width:110px;
+  height:110px;
+  border-radius:14px;
+  object-fit:cover;
+  background:#101010;
+  flex-shrink:0;
+}
+
+.dish-info{
+  flex:1;
+  min-width:0;
+}
+
+.dish-name{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.dish-price{
+  color:#d8a35d;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.dish-category{
+  color:#888;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.dish-description{
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  padding:9px 12px;
+  font-size:13px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  background:#181818;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:35px 15px;
+}
+
+.loading{
+  text-align:center;
+  color:#999;
+  padding:30px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+  body{
+    padding:10px;
+  }
+
+  header{
+    align-items:flex-start;
+  }
+
+  header h1{
+    font-size:19px;
+  }
+
+  header .danger{
+    padding:9px 11px;
+    font-size:13px;
+  }
+
+  .login-box{
+    margin:30px auto;
+    padding:20px;
+  }
+
+  .price-row{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .dish-card{
+    flex-direction:column;
+  }
+
+  .dish-photo{
+    width:100%;
+    height:190px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .actions button{
+    width:100%;
+  }
+
+  .form-buttons{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN -->
+
+<div id="loginPage">
+
+  <div class="login-box">
+
+    <div class="logo">🍽️ KURKODIK</div>
+
+    <div class="login-subtitle">
+      Panel administratora
+    </div>
+
+    <label>Email</label>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Adres e-mail"
+    >
+
+    <label>Hasło</label>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Hasło"
+    >
+
+    <button
+      class="primary login-button"
+      id="loginBtn"
+    >
+      Zaloguj się
+    </button>
+
+    <div
+      class="error"
+      id="loginError"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div
+  id="adminPage"
+  class="hidden"
+>
+
+<header>
+
+  <h1>🍽️ Panel administracyjny</h1>
+
+  <button
+    class="danger"
+    id="logoutBtn"
+  >
+    Wyloguj
+  </button>
+
+</header>
+
+
+<!-- MENU / BAR -->
+
+<div class="type-switch">
+
+  <button
+    class="type-button active"
+    id="menuTypeBtn"
+  >
+    🍽️ MENU
+  </button>
+
+  <button
+    class="type-button"
+    id="barTypeBtn"
+  >
+    🍹 BAR
+  </button>
+
+</div>
+
+
+<!-- CATEGORY -->
+
+<div class="category-box">
+
+  <div class="category-title">
+    Wybierz kategorię
+  </div>
+
+  <div
+    class="categories"
+    id="categories"
+  ></div>
+
+</div>
+
+
+<!-- FORM -->
+
+<div class="form-box">
+
+  <div
+    class="form-title"
+    id="formTitle"
+  >
+    ➕ Dodaj pozycję
+  </div>
+
+  <label>Nazwa</label>
+
+  <input
+    id="name"
+    type="text"
+    placeholder="np. Stek Ribeye"
+  >
+
+  <div class="price-row">
+
+    <div>
+
+      <label>Cena</label>
+
+      <input
+        id="price"
+        type="number"
+        step="0.01"
+        placeholder="59"
+      >
+
+    </div>
+
+    <div>
+
+      <label>Kategoria</label>
+
+      <input
+        id="categoryName"
+        type="text"
+        readonly
+      >
+
+    </div>
+
+  </div>
+
+  <label>Opis</label>
+
+  <textarea
+    id="description"
+    placeholder="Opis dania..."
+  ></textarea>
+
+  <label>Składniki</label>
+
+  <textarea
+    id="ingredients"
+    placeholder="np. wołowina, sól, pieprz..."
+  ></textarea>
+
+  <label>Alergeny</label>
+
+  <textarea
+    id="allergens"
+    placeholder="np. mleko, gluten..."
+  ></textarea>
+
+  <label>Zdjęcie</label>
+
+  <input
+    id="photo"
+    type="file"
+    accept="image/*"
+  >
+
+  <img
+    id="preview"
+    class="preview"
+    alt="Podgląd"
+  >
+
+  <div class="form-buttons">
+
+    <button
+      class="primary"
+      id="saveBtn"
+    >
+      💾 Zapisz
+    </button>
+
+    <button
+      class="dark"
+      id="cancelBtn"
+    >
+      Anuluj
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- LIST -->
+
+<div class="list-title">
+  Pozycje
+</div>
+
+<div
+  class="dishes-list"
+  id="dishesList"
+></div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCWQHz7LQqhShcOxLFEwiSWgEbVtYlW3mQ",
+
+  authDomain:
+    "kurkodik.firebaseapp.com",
+
+  projectId:
+    "kurkodik",
+
+  storageBucket:
+    "kurkodik.firebasestorage.app",
+
+  messagingSenderId:
+    "523076372170",
+
+  appId:
+    "1:523076372170:web:658b2483abb5cf6641d633",
+
+  measurementId:
+    "G-61RD5NHJD5"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+/* =========================
+   CLOUDINARY
+========================= */
+
+const cloudName =
+  "wtaymmya";
+
+const uploadPreset =
+  "Kurkodik_menu";
+
+
+/* =========================
+   DATA
+========================= */
+
+const categories = {
+
+  menu: [
+
+    {
+      id:"steki",
+      name:"🥩 Steki"
+    },
+
+    {
+      id:"dania",
+      name:"🍽️ Dania"
+    },
+
+    {
+      id:"desery",
+      name:"🍰 Desery"
+    },
+
+    {
+      id:"salatki",
+      name:"🥗 Sałatki"
+    }
+
+  ],
+
+  bar: [
+
+    {
+      id:"koktajle",
+      name:"🍸 Koktajle"
+    },
+
+    {
+      id:"piwo",
+      name:"🍺 Piwo"
+    },
+
+    {
+      id:"wino",
+      name:"🍷 Wino"
+    },
+
+    {
+      id:"napoje",
+      name:"🥤 Napoje"
+    }
+
+  ]
+
+};
+
+
+let currentType = "menu";
+
+let currentCategory = "steki";
+
+let editingId = null;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loginPage =
+  document.getElementById("loginPage");
+
+const adminPage =
+  document.getElementById("adminPage");
+
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const loginError =
+  document.getElementById("loginError");
+
+const menuTypeBtn =
+  document.getElementById("menuTypeBtn");
+
+const barTypeBtn =
+  document.getElementById("barTypeBtn");
+
+const categoriesBox =
+  document.getElementById("categories");
+
+const nameInput =
+  document.getElementById("name");
+
+const priceInput =
+  document.getElementById("price");
+
+const categoryNameInput =
+  document.getElementById("categoryName");
+
+const descriptionInput =
+  document.getElementById("description");
+
+const ingredientsInput =
+  document.getElementById("ingredients");
+
+const allergensInput =
+  document.getElementById("allergens");
+
+const photoInput =
+  document.getElementById("photo");
+
+const preview =
+  document.getElementById("preview");
+
+const saveBtn =
+  document.getElementById("saveBtn");
+
+const cancelBtn =
+  document.getElementById("cancelBtn");
+
+const dishesList =
+  document.getElementById("dishesList");
+
+const formTitle =
+  document.getElementById("formTitle");
+
+
+/* =========================
+   LOGIN
+========================= */
+
+loginBtn.onclick = async () => {
+
+  const email =
+    document.getElementById("email")
+      .value
+      .trim();
+
+  const password =
+    document.getElementById("password")
+      .value;
+
+  loginError.textContent = "";
+
+  if(!email || !password){
+
+    loginError.textContent =
+      "Wpisz email i hasło.";
+
+    return;
+  }
+
+  loginBtn.disabled = true;
+
+  loginBtn.textContent =
+    "Logowanie...";
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    loginError.textContent =
+      "Nieprawidłowy email lub hasło.";
+
+  }finally{
+
+    loginBtn.disabled = false;
+
+    loginBtn.textContent =
+      "Zaloguj się";
+
+  }
+
+};
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutBtn.onclick = async () => {
+
+  await signOut(auth);
+
+};
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    if(user){
+
+      loginPage
+        .classList
+        .add("hidden");
+
+      adminPage
+        .classList
+        .remove("hidden");
+
+      renderCategories();
+
+      loadDishes();
+
+    }else{
+
+      loginPage
+        .classList
+        .remove("hidden");
+
+      adminPage
+        .classList
+        .add("hidden");
+
+    }
+
+  }
+);
+
+
+/* =========================
+   MENU / BAR
+========================= */
+
+menuTypeBtn.onclick = () => {
+
+  currentType = "menu";
+
+  currentCategory = "steki";
+
+  editingId = null;
+
+  menuTypeBtn.classList.add("active");
+
+  barTypeBtn.classList.remove("active");
+
+  resetForm();
+
+  renderCategories();
+
+  loadDishes();
+
+};
+
+
+barTypeBtn.onclick = () => {
+
+  currentType = "bar";
+
+  currentCategory = "koktajle";
+
+  editingId = null;
+
+  barTypeBtn.classList.add("active");
+
+  menuTypeBtn.classList.remove("active");
+
+  resetForm();
+
+  renderCategories();
+
+  loadDishes();
+
+};
+
+
+/* =========================
+   CATEGORIES
+========================= */
+
+function renderCategories(){
+
+  categoriesBox.innerHTML = "";
+
+  categories[currentType].forEach(
+    category => {
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "category";
+
+      if(
+        category.id ===
+        currentCategory
+      ){
+
+        button.classList.add("active");
+
+      }
+
+      button.textContent =
+        category.name;
+
+      button.onclick = () => {
+
+        currentCategory =
+          category.id;
+
+        resetForm();
+
+        renderCategories();
+
+        loadDishes();
+
+      };
+
+      categoriesBox.appendChild(button);
+
+    }
+  );
+
+  updateCategoryName();
+
+}
+
+
+function updateCategoryName(){
+
+  const category =
+    categories[currentType]
+      .find(
+        item =>
+          item.id ===
+          currentCategory
+      );
+
+  categoryNameInput.value =
+    category
+      ? category.name
+      : "";
+
+}
+
+
+/* =========================
+   UPLOAD PHOTO
+========================= */
+
+async function uploadPhoto(file){
+
+  if(!file){
+
+    return "";
+
+  }
+
+  const formData =
+    new FormData();
+
+  formData.append(
+    "file",
+    file
+  );
+
+  formData.append(
+    "upload_preset",
+    uploadPreset
+  );
+
+  const response =
+    await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+  const data =
+    await response.json();
+
+  console.log(
+    "Cloudinary response:",
+    data
+  );
+
+  if(!response.ok){
+
+    throw new Error(
+      data.error?.message ||
+      "Błąd przesyłania zdjęcia."
+    );
+
+  }
+
+  if(!data.secure_url){
+
+    throw new Error(
+      "Cloudinary nie zwrócił adresu zdjęcia."
+    );
+
+  }
+
+  return data.secure_url;
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+saveBtn.onclick = async () => {
+
+  const name =
+    nameInput.value.trim();
+
+  const price =
+    priceInput.value.trim();
+
+  const description =
+    descriptionInput.value.trim();
+
+  const ingredients =
+    ingredientsInput.value.trim();
+
+  const allergens =
+    allergensInput.value.trim();
+
+  const file =
+    photoInput.files[0];
+
+
+  if(!name || !price){
+
+    alert(
+      "Wpisz nazwę i cenę."
+    );
+
+    return;
+
+  }
+
+
+  saveBtn.disabled = true;
+
+  saveBtn.textContent =
+    "Zapisywanie...";
+
+
+  try{
+
+    let photo = "";
+
+
+    if(file){
+
+      photo =
+        await uploadPhoto(file);
+
+    }
+
+
+    const data = {
+
+      name:name,
+
+      price:price,
+
+      description:description,
+
+      ingredients:ingredients,
+
+      allergens:allergens,
+
+      type:currentType,
+
+      category:currentCategory,
+
+      createdAt:
+        Date.now()
+
+    };
+
+
+    if(photo){
+
+      data.photo =
+        photo;
+
+    }
+
+
+    if(editingId){
+
+      await updateDoc(
+
+        doc(
+          db,
+          "dishes",
+          editingId
+        ),
+
+        data
+
+      );
+
+      alert(
+        "Pozycja została zmieniona."
+      );
+
+    }else{
+
+      await addDoc(
+
+        collection(
+          db,
+          "dishes"
+        ),
+
+        data
+
+      );
+
+      alert(
+        "Pozycja została dodana."
+      );
+
+    }
+
+
+    resetForm();
+
+    await loadDishes();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Błąd: " +
+      error.message
+    );
+
+  }finally{
+
+    saveBtn.disabled = false;
+
+    saveBtn.textContent =
+      "💾 Zapisz";
+
+  }
+
+};
+
+
+/* =========================
+   LOAD
+========================= */
+
+async function loadDishes(){
+
+  dishesList.innerHTML =
+    `<div class="loading">
+      Ładowanie...
+    </div>`;
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "dishes"
+        )
+      );
+
+
+    const dishes = [];
+
+
+    snapshot.forEach(
+      item => {
+
+        const data =
+          item.data();
+
+        if(
+          data.type === currentType &&
+          data.category === currentCategory
+        ){
+
+          dishes.push({
+
+            id:item.id,
+
+            ...data
+
+          });
+
+        }
+
+      }
+    );
+
+
+    dishes.sort(
+      (a,b) =>
+        (a.createdAt || 0) -
+        (b.createdAt || 0)
+    );
+
+
+    if(
+      dishes.length === 0
+    ){
+
+      dishesList.innerHTML =
+        `<div class="empty">
+          W tej kategorii nie ma jeszcze żadnych pozycji.
+        </div>`;
+
+      return;
+
+    }
+
+
+    dishesList.innerHTML = "";
+
+
+    dishes.forEach(
+      dish => {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "dish-card";
+
+
+        const photo =
+          dish.photo ||
+          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800";
+
+
+        card.innerHTML = `
+
+          <img
+            class="dish-photo"
+            src="${escapeHTML(photo)}"
+            alt=""
+          >
+
+          <div class="dish-info">
+
+            <div class="dish-name">
+              ${escapeHTML(dish.name)}
+            </div>
+
+            <div class="dish-price">
+              ${escapeHTML(dish.price)} zł
+            </div>
+
+            <div class="dish-category">
+              ${escapeHTML(
+                getCategoryName(
+                  currentType,
+                  currentCategory
+                )
+              )}
+            </div>
+
+            <div class="dish-description">
+              ${escapeHTML(
+                dish.description || ""
+              )}
+            </div>
+
+            <div class="actions">
+
+              <button
+                class="primary"
+                data-edit
+              >
+                ✏️ Edytuj
+              </button>
+
+              <button
+                class="danger"
+                data-delete
+              >
+                🗑 Usuń
+              </button>
+
+            </div>
+
+          </div>
+        `;
+
+
+        card
+          .querySelector("[data-edit]")
+          .onclick =
+          () => editDish(dish);
+
+
+        card
+          .querySelector("[data-delete]")
+          .onclick =
+          () => deleteDish(dish.id);
+
+
+        dishesList.appendChild(card);
+
+      }
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    dishesList.innerHTML =
+      `<div class="empty">
+        Nie udało się załadować danych.
+      </div>`;
+
+  }
+
+}
+
+
+/* =========================
+   EDIT
+========================= */
+
+function editDish(dish){
+
+  editingId =
+    dish.id;
+
+  formTitle.textContent =
+    "✏️ Edytuj pozycję";
+
+  nameInput.value =
+    dish.name || "";
+
+  priceInput.value =
+    dish.price || "";
+
+  descriptionInput.value =
+    dish.description || "";
+
+  ingredientsInput.value =
+    dish.ingredients || "";
+
+  allergensInput.value =
+    dish.allergens || "";
+
+  photoInput.value =
+    "";
+
+  if(dish.photo){
+
+    preview.src =
+      dish.photo;
+
+    preview.style.display =
+      "block";
+
+  }else{
+
+    preview.style.display =
+      "none";
+
+  }
+
+  saveBtn.textContent =
+    "💾 Zapisz zmiany";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+async function deleteDish(id){
+
+  const confirmed =
+    confirm(
+      "Czy na pewno chcesz usunąć tę pozycję?"
+    );
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "dishes",
+        id
+      )
+    );
+
+    alert(
+      "Pozycja została usunięta."
+    );
+
+    await loadDishes();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Nie udało się usunąć pozycji."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+photoInput.onchange = () => {
+
+  const file =
+    photoInput.files[0];
+
+  if(!file){
+
+    preview.style.display =
+      "none";
+
+    return;
+
+  }
+
+  const url =
+    URL.createObjectURL(file);
+
+  preview.src =
+    url;
+
+  preview.style.display =
+    "block";
+
+};
+
+
+/* =========================
+   RESET
+========================= */
+
+cancelBtn.onclick =
+  resetForm;
+
+
+function resetForm(){
+
+  editingId =
+    null;
+
+  formTitle.textContent =
+    "➕ Dodaj pozycję";
+
+  nameInput.value =
+    "";
+
+  priceInput.value =
+    "";
+
+  descriptionInput.value =
+    "";
+
+  ingredientsInput.value =
+    "";
+
+  allergensInput.value =
+    "";
+
+  photoInput.value =
+    "";
+
+  preview.src =
+    "";
+
+  preview.style.display =
+    "none";
+
+  saveBtn.textContent =
+    "💾 Zapisz";
+
+  updateCategoryName();
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getCategoryName(
+  type,
+  category
+){
+
+  const item =
+    categories[type]
+      .find(
+        x =>
+          x.id === category
+      );
+
+  return item
+    ? item.name
+    : category;
+
+}
+
+
+function escapeHTML(value){
+
+  if(
+    value === undefined ||
+    value === null
+  ){
+
+    return "";
+
+  }
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
+```

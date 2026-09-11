@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#15110e;
+    color:#eee;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+.menu{
+    width:100%;
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+}
+
+.page{
+    width:100%;
+    height:100vh;
+    padding:25px 5vw;
+    overflow-y:auto;
+}
+
+/* КНОПКА НАЗАД */
+
+.top-buttons{
+    position:absolute;
+    top:25px;
+    left:5vw;
+    z-index:20;
+}
+
+.top-button{
+    width:45px;
+    height:45px;
+    text-decoration:none;
+    color:#e87932;
+    border:1px solid #e87932;
+    font-size:24px;
+    background:#15110e;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+}
+
+.top-button:hover{
+    background:#e87932;
+    color:#15110e;
+}
+
+/* ЗАГОЛОВОК */
+
+.menu-title{
+    position:absolute;
+    right:18px;
+    top:30px;
+    writing-mode:vertical-rl;
+    color:#777;
+    font-size:12px;
+    letter-spacing:4px;
+    z-index:10;
+}
+
+/* HERO */
+
+.hero-wrap{
+    position:relative;
+    width:100%;
+    height:220px;
+    margin-bottom:25px;
+    overflow:hidden;
+    border-radius:4px;
+}
+
+.hero{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:brightness(.48);
+    transition:opacity .45s ease;
+}
+
+.categories{
+    position:absolute;
+    left:30px;
+    right:30px;
+    bottom:18px;
+    display:flex;
+    flex-direction:row;
+    align-items:flex-end;
+    justify-content:flex-start;
+    gap:28px;
+    z-index:5;
+    white-space:nowrap;
+}
+
+.cat{
+    border:0;
+    outline:none;
+    background:none;
+    color:#999;
+    font-size:23px;
+    font-weight:normal;
+    cursor:pointer;
+    padding:0;
+    line-height:1;
+    text-align:left;
+    transition:color .45s ease,font-size .45s ease,transform .45s ease;
+}
+
+.cat:hover{
+    color:#ccc;
+}
+
+.cat.active{
+    color:#e87932;
+    font-size:42px;
+    font-weight:bold;
+    transform:translateY(-2px);
+}
+
+/* БЛЮДА */
+
+.dishes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px 45px;
+    opacity:1;
+    transform:translateY(0);
+    transition:opacity .35s ease,transform .35s ease;
+}
+
+.dishes.fade{
+    opacity:0;
+    transform:translateY(12px);
+}
+
+.dish{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:15px;
+    cursor:pointer;
+    transition:transform .3s ease;
+}
+
+.dish:hover{
+    transform:translateX(5px);
+}
+
+.dish img{
+    width:120px;
+    height:92px;
+    object-fit:cover;
+    border-radius:4px;
+    background:#211a15;
+}
+
+.info h2{
+    color:#e87932;
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.info p{
+    color:#999;
+    font-size:12px;
+    line-height:1.4;
+    margin-bottom:6px;
+}
+
+.price{
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:#777;
+    margin:35px 0 15px;
+    font-size:12px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+    z-index:50;
+    padding:20px;
+}
+
+.modal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    background:#211a15;
+    width:min(500px,100%);
+    border-radius:8px;
+    overflow:hidden;
+    transform:translateY(30px) scale(.96);
+    transition:.4s;
+}
+
+.modal.show .modal-box{
+    transform:translateY(0) scale(1);
+}
+
+.modal-box img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.modal-content{
+    padding:22px;
+}
+
+.modal-content h2{
+    color:#e87932;
+    font-size:27px;
+    margin-bottom:10px;
+}
+
+.modal-content p{
+    color:#bbb;
+    line-height:1.5;
+    margin-bottom:12px;
+}
+
+.modal-price{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.modal-info{
+    color:#999;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
+
+.close{
+    border:0;
+    background:#e87932;
+    color:#111;
+    padding:10px 22px;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* LOADING */
+
+.loading{
+    color:#777;
+    text-align:center;
+    padding:40px;
+    grid-column:1 / -1;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .page{
+        padding:18px 15px;
+    }
+
+    .top-buttons{
+        top:18px;
+        left:15px;
+    }
+
+    .top-button{
+        width:42px;
+        height:42px;
+        font-size:22px;
+    }
+
+    .hero-wrap{
+        height:180px;
+        margin-bottom:22px;
+    }
+
+    .categories{
+        left:15px;
+        right:15px;
+        bottom:14px;
+        gap:15px;
+        overflow-x:auto;
+        overflow-y:hidden;
+        padding-bottom:2px;
+    }
+
+    .cat{
+        font-size:18px;
+        flex-shrink:0;
+    }
+
+    .cat.active{
+        font-size:30px;
+    }
+
+    .dishes{
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .dish{
+        grid-template-columns:100px 1fr;
+    }
+
+    .dish img{
+        width:100px;
+        height:78px;
+    }
+
+    .info h2{
+        font-size:17px;
+    }
+
+    .info p{
+        font-size:11px;
+    }
+
+    .price{
+        font-size:16px;
+    }
+
+    .menu-title{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="menu">
+
+    <div class="top-buttons">
+        <a href="index.html" class="top-button">←</a>
+    </div>
+
+    <div class="menu-title">
+        RESTAURANT MENU
+    </div>
+
+    <div class="page">
+
+        <div class="hero-wrap">
+
+            <img
+                id="hero"
+                class="hero"
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80"
+            >
+
+            <div class="categories">
+
+                <button class="cat active" data-category="steki">
+                    STEKI
+                </button>
+
+                <button class="cat" data-category="dania">
+                    DANIA
+                </button>
+
+                <button class="cat" data-category="desery">
+                    DESERY
+                </button>
+
+                <button class="cat" data-category="salatki">
+                    SAŁATKI
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="dishes" class="dishes">
+            <div class="loading">
+                Ładowanie menu...
+            </div>
+        </div>
+
+        <div class="footer">
+            Zapraszamy
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+
+    <div class="modal-box">
+
+        <img id="modalImage" src="">
+
+        <div class="modal-content">
+
+            <h2 id="modalTitle"></h2>
+
+            <p id="modalDescription"></p>
+
+            <div id="modalInfo" class="modal-info"></div>
+
+            <div id="modalPrice" class="modal-price"></div>
+
+            <button class="close" id="closeModal">
+                ZAMKNIJ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCWQHzL7QqhShcOxLFEwiSWgVtYlW3mQ",
+    authDomain: "kurkodik.firebaseapp.com",
+    projectId: "kurkodik",
+    storageBucket: "kurkodik.firebasestorage.app",
+    messagingSenderId: "523076372170",
+    appId: "1:523076372170:web:658b2483abb5cf6641d633",
+    measurementId: "G-61RD5NHJD5"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+
+/* НАСТРОЙКИ */
+
+const categoryHeroes = {
+
+    steki:
+    "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80",
+
+    dania:
+    "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80",
+
+    desery:
+    "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1600&q=80",
+
+    salatki:
+    "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=1600&q=80"
+
+};
+
+
+let allDishes = [];
+
+let currentCategory = "steki";
+
+
+/* ЗАГРУЗКА ИЗ FIRESTORE */
+
+async function loadDishes(){
+
+    const dishesContainer = document.getElementById("dishes");
+
+    try{
+
+        const snapshot = await db.collection("dishes").get();
+
+        allDishes = [];
+
+        snapshot.forEach(doc => {
+
+            const data = doc.data();
+
+            /*
+              Берём только MENU.
+              BAR сюда не попадёт.
+            */
+
+            if(data.type === "menu"){
+
+                allDishes.push({
+                    id: doc.id,
+                    ...data
+                });
+
+            }
+
+        });
+
+        console.log("Загружено блюд:", allDishes.length);
+
+        showCategory(currentCategory);
+
+    }catch(error){
+
+        console.error(error);
+
+        dishesContainer.innerHTML = `
+            <div class="loading">
+                Nie udało się załadować menu.
+                <br><br>
+                Sprawdź połączenie z Firebase.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ПОКАЗ КАТЕГОРИИ */
+
+function showCategory(category){
+
+    currentCategory = category;
+
+    const dishesContainer =
+        document.getElementById("dishes");
+
+    const hero =
+        document.getElementById("hero");
+
+
+    dishesContainer.classList.add("fade");
+
+
+    setTimeout(() => {
+
+        hero.style.opacity = "0";
+
+        setTimeout(() => {
+
+            hero.src =
+                categoryHeroes[category] ||
+                categoryHeroes.steki;
+
+            hero.style.opacity = "1";
+
+        },150);
+
+
+        /*
+          Фильтруем блюда из Firestore
+        */
+
+        const dishes = allDishes.filter(dish => {
+
+            return dish.category === category;
+
+        });
+
+
+        if(dishes.length === 0){
+
+            dishesContainer.innerHTML = `
+                <div class="loading">
+                    Brak dań w tej kategorii.
+                </div>
+            `;
+
+        }else{
+
+            dishesContainer.innerHTML =
+                dishes.map(dish => createDish(dish)).join("");
+
+        }
+
+
+        dishesContainer.classList.remove("fade");
+
+    },200);
+
+
+    /*
+      Активная категория
+    */
+
+    document.querySelectorAll(".cat").forEach(button => {
+
+        button.classList.toggle(
+            "active",
+            button.dataset.category === category
+        );
+
+    });
+
+}
+
+
+/* СОЗДАНИЕ КАРТОЧКИ */
+
+function createDish(dish){
+
+    const image =
+        dish.photo ||
+        dish.image ||
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80";
+
+    const name =
+        dish.name ||
+        "Bez nazwy";
+
+    const description =
+        dish.description ||
+        "";
+
+    const price =
+        dish.price !== undefined
+            ? dish.price
+            : "0";
+
+
+    return `
+
+        <div
+            class="dish"
+            onclick="openModal('${escapeAttr(dish.id)}')"
+        >
+
+            <img
+                src="${escapeAttr(image)}"
+                alt="${escapeAttr(name)}"
+                onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'"
+            >
+
+            <div class="info">
+
+                <h2>
+                    ${escapeHtml(name)}
+                </h2>
+
+                <p>
+                    ${escapeHtml(description)}
+                </p>
+
+                <div class="price">
+                    ${escapeHtml(String(price))} zł
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* MODAL */
+
+function openModal(id){
+
+    const dish =
+        allDishes.find(item => item.id === id);
+
+    if(!dish) return;
+
+
+    const image =
+        dish.photo ||
+        dish.image ||
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80";
+
+
+    document.getElementById("modalImage").src =
+        image;
+
+    document.getElementById("modalTitle").textContent =
+        dish.name || "Bez nazwy";
+
+    document.getElementById("modalDescription").textContent =
+        dish.description || "";
+
+    document.getElementById("modalPrice").textContent =
+        (dish.price || 0) + " zł";
+
+
+    let info = "";
+
+    if(dish.ingredients){
+
+        info +=
+            "<b>Składniki:</b> " +
+            escapeHtml(dish.ingredients) +
+            "<br><br>";
+
+    }
+
+    if(dish.allergens){
+
+        info +=
+            "<b>Alergeny:</b> " +
+            escapeHtml(dish.allergens);
+
+    }
+
+    document.getElementById("modalInfo").innerHTML =
+        info;
+
+
+    document.getElementById("modal").classList.add("show");
+
+}
+
+
+/* ЗАКРЫТЬ MODAL */
+
+document
+    .getElementById("closeModal")
+    .addEventListener("click", () => {
+
+        document
+            .getElementById("modal")
+            .classList.remove("show");
+
+    });
+
+
+document
+    .getElementById("modal")
+    .addEventListener("click", event => {
+
+        if(event.target.id === "modal"){
+
+            document
+                .getElementById("modal")
+                .classList.remove("show");
+
+        }
+
+    });
+
+
+/* КАТЕГОРИИ */
+
+document.querySelectorAll(".cat").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        showCategory(button.dataset.category);
+
+    });
+
+});
+
+
+/* БЕЗОПАСНЫЙ HTML */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* СТАРТ */
+
+loadDishes();
+
+</script>
+
+</body>
+</html>
