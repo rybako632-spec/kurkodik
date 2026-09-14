@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bar</title>
+
+<title>KURKODIK — BAR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -14,357 +16,303 @@
 }
 
 body{
-    background:#15110e;
-    color:#eee;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
+    background:#150d09;
+    color:#e1d9d1;
+    font-family:"Open Sans",sans-serif;
 }
 
-.menu{
-    width:100%;
-    height:100vh;
+.menu-card{
+    max-width:680px;
+    margin:0 auto;
+    min-height:100vh;
+    background:#20120b;
+    border-left:1px solid #331d12;
+    border-right:1px solid #331d12;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
     position:relative;
     overflow:hidden;
 }
 
-.page{
-    width:100%;
-    height:100vh;
-    padding:25px 5vw;
-    overflow-y:auto;
-}
+/* BACK BUTTON */
 
-/* BACK */
-
-.top-buttons{
+.back-btn{
     position:absolute;
-    top:25px;
-    left:5vw;
-    z-index:20;
-}
-
-.top-button{
-    width:45px;
-    height:45px;
-    text-decoration:none;
-    color:#e87932;
-    border:1px solid #e87932;
-    font-size:24px;
-    background:#15110e;
+    top:18px;
+    left:18px;
+    width:44px;
+    height:44px;
     border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:.3s;
-}
-
-.top-button:hover{
+    border:none;
     background:#e87932;
-    color:#15110e;
+    color:#150d09;
+    font-size:23px;
+    font-weight:bold;
+    cursor:pointer;
+    z-index:10;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);
 }
 
-/* TITLE */
-
-.menu-title{
-    position:absolute;
-    right:18px;
-    top:30px;
-    writing-mode:vertical-rl;
-    color:#777;
-    font-size:12px;
-    letter-spacing:4px;
-    z-index:10;
+.back-btn:hover{
+    transform:scale(1.05);
 }
 
 /* HERO */
 
-.hero-wrap{
+.hero{
     position:relative;
-    width:100%;
-    height:220px;
-    margin-bottom:25px;
+    height:250px;
     overflow:hidden;
-    border-radius:4px;
 }
 
-.hero{
+.hero img{
     width:100%;
     height:100%;
     object-fit:cover;
-    display:block;
-    filter:brightness(.48);
-    transition:opacity .45s ease;
+    filter:brightness(.65);
+    transition:opacity .25s ease;
+}
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        #20120b 0%,
+        rgba(32,18,11,.45) 45%,
+        rgba(0,0,0,.1) 100%
+    );
+}
+
+.hero-title{
+    position:absolute;
+    bottom:18px;
+    left:25px;
+    color:#e87932;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:54px;
+    letter-spacing:2px;
+    z-index:2;
+}
+
+.hero-label{
+    position:absolute;
+    right:18px;
+    bottom:22px;
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-size:11px;
+    letter-spacing:3px;
+    color:#b59d8c;
+    z-index:2;
 }
 
 /* CATEGORIES */
 
 .categories{
-    position:absolute;
-    left:30px;
-    right:30px;
-    bottom:18px;
     display:flex;
-    flex-direction:row;
-    align-items:flex-end;
-    justify-content:flex-start;
-    gap:28px;
-    z-index:5;
-    white-space:nowrap;
+    gap:12px;
+    overflow-x:auto;
+    padding:15px 20px 17px;
+    scrollbar-width:none;
+    border-bottom:1px solid #331d12;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
 }
 
 .cat{
-    border:0;
-    outline:none;
+    flex-shrink:0;
+    border:none;
     background:none;
-    color:#999;
-    font-size:23px;
-    font-weight:normal;
+    color:#80695a;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:19px;
+    letter-spacing:1px;
     cursor:pointer;
-    padding:0;
-    line-height:1;
-    text-align:left;
-    transition:
-        color .45s ease,
-        font-size .45s ease,
-        transform .45s ease;
+    transition:.2s;
 }
 
 .cat:hover{
-    color:#ccc;
+    color:#c77a46;
 }
 
 .cat.active{
     color:#e87932;
-    font-size:42px;
-    font-weight:bold;
-    transform:translateY(-2px);
+    transform:scale(1.08);
 }
 
-/* PRODUCTS */
+/* DISHES */
 
 .dishes{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px 45px;
-    opacity:1;
-    transform:translateY(0);
-    transition:
-        opacity .35s ease,
-        transform .35s ease;
-}
-
-.dishes.fade{
-    opacity:0;
-    transform:translateY(12px);
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+    padding:20px;
+    transition:opacity .2s ease;
 }
 
 .dish{
-    display:grid;
-    grid-template-columns:120px 1fr;
-    gap:15px;
+    background:#28150c;
+    border:1px solid #3a2014;
+    border-radius:8px;
+    padding:14px;
     cursor:pointer;
-    transition:transform .3s ease;
+    transition:.2s;
+    min-height:125px;
 }
 
 .dish:hover{
-    transform:translateX(5px);
+    transform:translateY(-2px);
+    border-color:#e87932;
 }
 
-.dish img{
-    width:120px;
-    height:92px;
-    object-fit:cover;
-    border-radius:4px;
-    background:#211a15;
-}
-
-.info h2{
+.dish-name{
     color:#e87932;
-    font-size:19px;
-    margin-bottom:5px;
-}
-
-.info p{
-    color:#999;
-    font-size:12px;
-    line-height:1.4;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:22px;
+    letter-spacing:.7px;
     margin-bottom:6px;
 }
 
-.price{
+.dish-price{
     color:#fff;
-    font-size:18px;
-    font-weight:bold;
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:7px;
 }
 
-/* LOADING */
-
-.loading{
-    color:#777;
-    text-align:center;
-    padding:40px;
-    grid-column:1 / -1;
-}
-
-/* FOOTER */
-
-.footer{
-    text-align:center;
-    color:#777;
-    margin:35px 0 15px;
+.dish-description{
+    color:#9f8d80;
     font-size:12px;
+    line-height:1.45;
+}
+
+/* EMPTY */
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:40px 10px;
+    color:#80695a;
+    font-size:14px;
 }
 
 /* MODAL */
 
 .modal{
+    display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.82);
-    display:flex;
+    background:rgba(0,0,0,.8);
+    z-index:100;
+    padding:20px;
     align-items:center;
     justify-content:center;
-    opacity:0;
-    visibility:hidden;
-    transition:.4s;
-    z-index:50;
-    padding:20px;
 }
 
 .modal.show{
-    opacity:1;
-    visibility:visible;
+    display:flex;
 }
 
 .modal-box{
-    background:#211a15;
-    width:min(500px,100%);
-    border-radius:8px;
-    overflow:hidden;
-    transform:translateY(30px) scale(.96);
-    transition:.4s;
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#20120b;
+    border:1px solid #e87932;
+    border-radius:10px;
+    position:relative;
+    box-shadow:0 10px 40px rgba(0,0,0,.7);
 }
 
-.modal.show .modal-box{
-    transform:translateY(0) scale(1);
-}
-
-.modal-box img{
+.modal-image{
     width:100%;
     height:250px;
     object-fit:cover;
 }
 
 .modal-content{
-    padding:22px;
+    padding:20px;
 }
 
-.modal-content h2{
+.modal-title{
     color:#e87932;
-    font-size:27px;
-    margin-bottom:10px;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:34px;
+    letter-spacing:1px;
+    margin-bottom:6px;
 }
 
-.modal-content p{
-    color:#bbb;
-    line-height:1.5;
-    margin-bottom:12px;
+.modal-price{
+    color:#fff;
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:15px;
 }
 
-.modal-info{
-    color:#999;
-    font-size:13px;
+.modal-description{
+    color:#c5b7ac;
+    font-size:14px;
     line-height:1.5;
     margin-bottom:15px;
 }
 
-.modal-price{
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:18px;
+.modal-info{
+    margin-top:10px;
 }
 
-.close{
-    border:0;
+.modal-info strong{
+    color:#e87932;
+    display:block;
+    margin-bottom:4px;
+}
+
+.modal-info p{
+    color:#b9a89b;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.close-modal{
+    position:absolute;
+    right:12px;
+    top:12px;
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
     background:#e87932;
-    color:#111;
-    padding:10px 22px;
-    border-radius:4px;
-    cursor:pointer;
+    color:#150d09;
+    font-size:22px;
     font-weight:bold;
+    cursor:pointer;
+    z-index:5;
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
-
-    .page{
-        padding:18px 15px;
-    }
-
-    .top-buttons{
-        top:18px;
-        left:15px;
-    }
-
-    .top-button{
-        width:42px;
-        height:42px;
-        font-size:22px;
-    }
-
-    .hero-wrap{
-        height:180px;
-        margin-bottom:22px;
-    }
-
-    .categories{
-        left:15px;
-        right:15px;
-        bottom:14px;
-        gap:15px;
-        overflow-x:auto;
-        overflow-y:hidden;
-        padding-bottom:2px;
-    }
-
-    .cat{
-        font-size:18px;
-        flex-shrink:0;
-    }
-
-    .cat.active{
-        font-size:30px;
-    }
+@media(max-width:520px){
 
     .dishes{
         grid-template-columns:1fr;
-        gap:18px;
     }
 
-    .dish{
-        grid-template-columns:100px 1fr;
+    .hero{
+        height:230px;
     }
 
-    .dish img{
-        width:100px;
-        height:78px;
+    .hero-title{
+        font-size:46px;
     }
 
-    .info h2{
-        font-size:17px;
+    .modal{
+        padding:10px;
     }
 
-    .info p{
-        font-size:11px;
-    }
-
-    .price{
-        font-size:16px;
-    }
-
-    .menu-title{
-        display:none;
+    .modal-image{
+        height:210px;
     }
 }
 </style>
@@ -372,86 +320,99 @@ body{
 
 <body>
 
-<div class="menu">
+<div class="menu-card">
 
-    <div class="top-buttons">
-        <a href="index.html" class="top-button">←</a>
-    </div>
+    <button class="back-btn" onclick="goBack()">‹</button>
 
-    <div class="menu-title">
-        RESTAURANT BAR
-    </div>
+    <!-- HERO -->
+    <div class="hero">
+        <img
+            id="heroImage"
+            src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1600&q=80"
+            alt="Bar"
+        >
 
-    <div class="page">
+        <div class="hero-overlay"></div>
 
-        <div class="hero-wrap">
-
-            <img
-                id="hero"
-                class="hero"
-                src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1600&q=80"
-            >
-
-            <div class="categories">
-
-                <button class="cat active" data-category="koktajle">
-                    KOKTAJLE
-                </button>
-
-                <button class="cat" data-category="piwo">
-                    PIWO
-                </button>
-
-                <button class="cat" data-category="wino">
-                    WINO
-                </button>
-
-                <button class="cat" data-category="napoje">
-                    NAPOJE
-                </button>
-
-            </div>
-
+        <div class="hero-title" id="heroTitle">
+            KOKTAJLE
         </div>
 
-        <div id="dishes" class="dishes">
-
-            <div class="loading">
-                Ładowanie...
-            </div>
-
+        <div class="hero-label">
+            KURKODIK BAR
         </div>
+    </div>
 
-        <div class="footer">
-            Zapraszamy
-        </div>
+    <!-- CATEGORIES -->
+    <div class="categories">
+
+        <button class="cat active" data-category="koktajle">
+            KOKTAJLE
+        </button>
+
+        <button class="cat" data-category="soki">
+            SOKI
+        </button>
+
+        <button class="cat" data-category="wino">
+            WINO
+        </button>
+
+        <button class="cat" data-category="napoje">
+            NAPOJE
+        </button>
 
     </div>
+
+    <!-- DISHES -->
+    <div class="dishes" id="dishes"></div>
 
 </div>
 
 
 <!-- MODAL -->
 
-<div id="modal" class="modal">
+<div class="modal" id="modal">
 
     <div class="modal-box">
 
-        <img id="modalImage" src="">
+        <button class="close-modal" onclick="closeModal()">
+            ×
+        </button>
+
+        <img
+            id="modalImage"
+            class="modal-image"
+            src=""
+            alt=""
+        >
 
         <div class="modal-content">
 
-            <h2 id="modalTitle"></h2>
+            <div
+                class="modal-title"
+                id="modalTitle">
+            </div>
 
-            <p id="modalDescription"></p>
+            <div
+                class="modal-price"
+                id="modalPrice">
+            </div>
 
-            <div id="modalInfo" class="modal-info"></div>
+            <div
+                class="modal-description"
+                id="modalDescription">
+            </div>
 
-            <div id="modalPrice" class="modal-price"></div>
+            <div class="modal-info">
+                <strong>Składniki</strong>
+                <p id="modalIngredients">—</p>
+            </div>
 
-            <button class="close" id="closeModal">
-                ZAMKNIJ
-            </button>
+            <div class="modal-info">
+                <strong>Alergeny</strong>
+                <p id="modalAllergens">—</p>
+            </div>
 
         </div>
 
@@ -460,73 +421,93 @@ body{
 </div>
 
 
-<!-- FIREBASE -->
+<script type="module">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<script>
+import {
+    getFirestore,
+    collection,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* FIREBASE */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCWQHz7LQqhShcOxLFEwiSWgVtYlW3mQ",
-    authDomain: "kurkodik.firebaseapp.com",
-    projectId: "kurkodik",
-    storageBucket: "kurkodik.firebasestorage.app",
-    messagingSenderId: "523076372170",
-    appId: "1:523076372170:web:658b2483abb5cf6641d633",
-    measurementId: "G-61RD5NHJD5"
+    apiKey: "AIzaSyDFP5FWKwuMifp67LhRMbABVwv16NmHrf8",
+    authDomain: "kurkodik2.firebaseapp.com",
+    projectId: "kurkodik2",
+    storageBucket: "kurkodik2.firebasestorage.app",
+    messagingSenderId: "68141393475",
+    appId: "1:68141393475:web:6eeb35e6059f6aebda16f6",
+    measurementId: "G-Q2Q83TKEV9"
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const db = firebase.firestore();
 
-
-/* HERO ДЛЯ КАТЕГОРИЙ */
+/* CATEGORY HEROES */
 
 const categoryHeroes = {
 
-    koktajle:
-    "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1600&q=80",
+    koktajle:{
+        title:"KOKTAJLE",
+        img:
+        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1600&q=80"
+    },
 
-    piwo:
-    "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80",
+    soki:{
+        title:"SOKI",
+        img:
+        "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=1600&q=80"
+    },
 
-    wino:
-    "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1600&q=80",
+    wino:{
+        title:"WINO",
+        img:
+        "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1600&q=80"
+    },
 
-    napoje:
-    "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1600&q=80"
+    napoje:{
+        title:"NAPOJE",
+        img:
+        "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1600&q=80"
+    }
 
 };
 
 
-let allDishes = [];
+/* ELEMENTS */
 
+const dishesContainer =
+    document.getElementById("dishes");
+
+const hero =
+    document.getElementById("heroImage");
+
+const heroTitle =
+    document.getElementById("heroTitle");
+
+
+let allDishes = [];
 let currentCategory = "koktajle";
 
 
-/* ЗАГРУЗКА ИЗ FIRESTORE */
+/* FIRESTORE */
 
-async function loadDishes(){
-
-    const container =
-        document.getElementById("dishes");
-
-    try{
-
-        const snapshot =
-            await db.collection("dishes").get();
+onSnapshot(
+    collection(db,"dishes"),
+    snapshot => {
 
         allDishes = [];
 
         snapshot.forEach(doc => {
 
             const data = doc.data();
-
-            /*
-              Берём только BAR
-            */
 
             if(data.type === "bar"){
 
@@ -539,101 +520,68 @@ async function loadDishes(){
 
         });
 
-        console.log(
-            "BAR загружено:",
-            allDishes.length
-        );
-
         showCategory(currentCategory);
 
-    }catch(error){
+    },
+    error => {
 
-        console.error(
-            "Firebase error:",
-            error
-        );
+        console.error("Firebase error:",error);
 
-        container.innerHTML = `
-            <div class="loading">
-                Nie udało się załadować baru.
-                <br><br>
-                Sprawdź Firebase.
+        dishesContainer.innerHTML = `
+            <div class="empty">
+                Nie udało się załadować menu.
             </div>
         `;
 
     }
+);
 
-}
 
-
-/* ПОКАЗ КАТЕГОРИИ */
+/* SHOW CATEGORY */
 
 function showCategory(category){
 
     currentCategory = category;
 
-    const container =
-        document.getElementById("dishes");
+    const catInfo =
+        categoryHeroes[category] ||
+        categoryHeroes.koktajle;
 
-    const hero =
-        document.getElementById("hero");
 
-    container.classList.add("fade");
+    /* CHANGE HERO */
 
+    hero.style.opacity = "0";
 
     setTimeout(() => {
 
-        hero.style.opacity = "0";
+        hero.src = catInfo.img;
 
-        setTimeout(() => {
+        heroTitle.textContent =
+            catInfo.title;
 
-            hero.src =
-                categoryHeroes[category] ||
-                categoryHeroes.koktajle;
+        hero.style.opacity = "1";
 
-            hero.style.opacity = "1";
-
-        },150);
+    },150);
 
 
-        /*
-          Фильтруем BAR по категории
-        */
+    /* FILTER */
 
-        const dishes =
-            allDishes.filter(dish => {
-
-                return dish.category === category;
-
-            });
-
-
-        if(dishes.length === 0){
-
-            container.innerHTML = `
-                <div class="loading">
-                    Brak produktów w tej kategorii.
-                </div>
-            `;
-
-        }else{
-
-            container.innerHTML =
-                dishes
-                .map(dish => createDish(dish))
-                .join("");
-
-        }
+    const dishes =
+        allDishes.filter(
+            dish =>
+                String(dish.category || "")
+                .toLowerCase() ===
+                category.toLowerCase()
+        );
 
 
-        container.classList.remove("fade");
-
-    },200);
+    renderDishes(dishes);
 
 
-    /* ACTIVE */
+    /* ACTIVE BUTTON */
 
-    document.querySelectorAll(".cat")
+    document
+        .querySelectorAll(".cat")
         .forEach(button => {
 
             button.classList.toggle(
@@ -646,118 +594,127 @@ function showCategory(category){
 }
 
 
-/* КАРТОЧКА */
+/* RENDER */
 
-function createDish(dish){
+function renderDishes(dishes){
 
-    const image =
-        dish.photo ||
-        dish.image ||
-        "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80";
+    dishesContainer.style.opacity = "0";
 
-    const name =
-        dish.name ||
-        "Bez nazwy";
+    setTimeout(() => {
 
-    const description =
-        dish.description ||
-        "";
+        dishesContainer.innerHTML = "";
 
-    const price =
-        dish.price !== undefined
-            ? dish.price
-            : "0";
+        if(dishes.length === 0){
 
-
-    return `
-
-        <div
-            class="dish"
-            onclick="openModal('${escapeAttr(dish.id)}')"
-        >
-
-            <img
-                src="${escapeAttr(image)}"
-                alt="${escapeAttr(name)}"
-                onerror="this.src='https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80'"
-            >
-
-            <div class="info">
-
-                <h2>
-                    ${escapeHtml(name)}
-                </h2>
-
-                <p>
-                    ${escapeHtml(description)}
-                </p>
-
-                <div class="price">
-                    ${escapeHtml(String(price))} zł
+            dishesContainer.innerHTML = `
+                <div class="empty">
+                    Brak pozycji w tej kategorii.
                 </div>
+            `;
 
-            </div>
+        }else{
 
-        </div>
+            dishes.forEach(dish => {
 
-    `;
+                const card =
+                    document.createElement("div");
+
+                card.className = "dish";
+
+                card.innerHTML = `
+
+                    <div class="dish-name">
+                        ${escapeHTML(dish.name || "Bez nazwy")}
+                    </div>
+
+                    <div class="dish-price">
+                        ${escapeHTML(dish.price || "")} zł
+                    </div>
+
+                    <div class="dish-description">
+                        ${escapeHTML(
+                            dish.description || ""
+                        )}
+                    </div>
+
+                `;
+
+                card.addEventListener(
+                    "click",
+                    () => openModal(dish)
+                );
+
+                dishesContainer.appendChild(card);
+
+            });
+
+        }
+
+        dishesContainer.style.opacity = "1";
+
+    },150);
 
 }
 
 
+/* CATEGORY BUTTONS */
+
+document
+    .querySelectorAll(".cat")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                showCategory(
+                    button.dataset.category
+                );
+
+            }
+        );
+
+    });
+
+
 /* MODAL */
 
-function openModal(id){
+function openModal(dish){
 
-    const dish =
-        allDishes.find(item => item.id === id);
+    document.getElementById("modalTitle")
+        .textContent =
+        dish.name || "Bez nazwy";
 
-    if(!dish) return;
+    document.getElementById("modalPrice")
+        .textContent =
+        `${dish.price || ""} zł`;
+
+    document.getElementById("modalDescription")
+        .textContent =
+        dish.description || "";
+
+    document.getElementById("modalIngredients")
+        .textContent =
+        dish.ingredients || "—";
+
+    document.getElementById("modalAllergens")
+        .textContent =
+        dish.allergens || "—";
 
 
     const image =
-        dish.photo ||
-        dish.image ||
-        "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1000&q=80";
+        document.getElementById("modalImage");
 
+    if(dish.photo){
 
-    document.getElementById("modalImage").src =
-        image;
+        image.src = dish.photo;
+        image.style.display = "block";
 
-    document.getElementById("modalTitle").textContent =
-        dish.name || "Bez nazwy";
+    }else{
 
-    document.getElementById("modalDescription").textContent =
-        dish.description || "";
-
-    document.getElementById("modalPrice").textContent =
-        (dish.price || 0) + " zł";
-
-
-    let info = "";
-
-
-    if(dish.ingredients){
-
-        info +=
-            "<b>Składniki:</b> " +
-            escapeHtml(dish.ingredients) +
-            "<br><br>";
+        image.style.display = "none";
 
     }
-
-
-    if(dish.allergens){
-
-        info +=
-            "<b>Alergeny:</b> " +
-            escapeHtml(dish.allergens);
-
-    }
-
-
-    document.getElementById("modalInfo").innerHTML =
-        info;
 
 
     document
@@ -767,17 +724,13 @@ function openModal(id){
 }
 
 
-/* CLOSE */
+window.closeModal = function(){
 
-document
-    .getElementById("closeModal")
-    .addEventListener("click", () => {
+    document
+        .getElementById("modal")
+        .classList.remove("show");
 
-        document
-            .getElementById("modal")
-            .classList.remove("show");
-
-    });
+};
 
 
 document
@@ -786,34 +739,25 @@ document
 
         if(event.target.id === "modal"){
 
-            document
-                .getElementById("modal")
-                .classList.remove("show");
+            closeModal();
 
         }
 
     });
 
 
-/* CATEGORIES */
+/* BACK */
 
-document.querySelectorAll(".cat")
-    .forEach(button => {
+window.goBack = function(){
 
-        button.addEventListener("click", () => {
+    window.location.href = "index.html";
 
-            showCategory(
-                button.dataset.category
-            );
-
-        });
-
-    });
+};
 
 
-/* ESCAPE */
+/* SECURITY */
 
-function escapeHtml(value){
+function escapeHTML(value){
 
     return String(value)
         .replace(/&/g,"&amp;")
@@ -824,19 +768,7 @@ function escapeHtml(value){
 
 }
 
-function escapeAttr(value){
-
-    return escapeHtml(value);
-
-}
-
-
-/* START */
-
-loadDishes();
-
 </script>
 
 </body>
 </html>
-
